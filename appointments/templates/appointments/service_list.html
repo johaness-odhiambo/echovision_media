@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Services | Echovision Media{% endblock %}
+
+{% block content %}
+<section class="hero mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <span class="tag">Creative bookings</span>
+            <h1 class="mt-3">Modern media services for bold stories.</h1>
+            <p class="section-subtitle">Book photo, video, and creative coverage in minutes. We handle the rest.</p>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a class="btn btn-brand" href="{% url 'gallery' %}">Explore gallery</a>
+                <a class="btn btn-outline-light" href="#services">Browse services</a>
+            </div>
+        </div>
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <div class="card-glass p-4">
+                <h4 class="mb-2">What you get</h4>
+                <p class="section-subtitle">High-impact visuals, flexible booking windows, and Mpesa payment options.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge-soft">Fast turnaround</span>
+                    <span class="badge-soft">Pro equipment</span>
+                    <span class="badge-soft">Creative team</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="section-title">Services</h2>
+            <p class="section-subtitle">Pick the service that fits your vision.</p>
+        </div>
+        <a class="btn btn-outline-light" href="{% url 'gallery' %}">View gallery</a>
+    </div>
+
+    <div class="row g-4">
+        {% for service in services %}
+        <div class="col-md-4">
+            <div class="card-glass h-100 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">{{ service.name }}</h5>
+                    <span class="badge-soft">{{ service.duration_minutes }} min</span>
+                </div>
+                <p class="card-text">{{ service.description|default:'Professional media service tailored to your needs.' }}</p>
+                <p class="fw-bold">KSh {{ service.price }}</p>
+                <a class="btn btn-brand" href="{% url 'service_detail' service.slug %}">View details</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No services available yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

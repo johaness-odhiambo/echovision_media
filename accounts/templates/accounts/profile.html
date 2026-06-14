@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}My profile | Echovision Media{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card-glass p-4">
+            <span class="tag">Profile</span>
+            <h1 class="mt-3">My profile</h1>
+            <div class="mt-3">
+                <p><strong>Username:</strong> {{ request.user.username }}</p>
+                <p><strong>Email:</strong> {{ request.user.email }}</p>
+                <p><strong>Phone:</strong> {{ profile.phone_number|default:'-' }}</p>
+                <p><strong>Bio:</strong> {{ profile.bio|default:'-' }}</p>
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="Profile image" class="img-thumbnail mt-2" />
+                {% endif %}
+            </div>
+            <div class="mt-3">
+                <a class="btn btn-brand" href="{% url 'profile_edit' %}">Edit profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

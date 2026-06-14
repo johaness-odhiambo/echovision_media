@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}My bookings | Echovision Media{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+        <h1 class="section-title">My bookings</h1>
+        <p class="section-subtitle">Track your upcoming sessions and payment status.</p>
+    </div>
+    <a class="btn btn-outline-light" href="{% url 'services' %}">Book another</a>
+</div>
+
+<div class="card-glass p-4">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.service.name }}</td>
+                <td>{{ appointment.scheduled_at|date:'Y-m-d H:i' }}</td>
+                <td>{{ appointment.status }}</td>
+                <td><a href="{% url 'appointment_detail' appointment.id %}">View</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No bookings yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

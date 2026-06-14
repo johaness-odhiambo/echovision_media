@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Book {{ service.name }} | Echovision Media{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card-glass p-4">
+            <span class="tag">Booking</span>
+            <h1 class="mt-3">Book {{ service.name }}</h1>
+            <p class="section-subtitle">Pick a time that works. We will confirm within business hours.</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-brand" type="submit">Submit booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
