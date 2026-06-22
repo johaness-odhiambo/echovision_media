@@ -1,8 +1,20 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
 from .models import Profile
+
+class LoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control form-control-lg',
+            'placeholder': 'Enter your username'
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control form-control-lg',
+            'placeholder': 'Enter your password'
+        })
 
 
 class SignUpForm(UserCreationForm):
@@ -10,22 +22,14 @@ class SignUpForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Choose a username'
-        })
-        self.fields['email'].widget = forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'you@example.com'
-        })
-        self.fields['password1'].widget = forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Create a password'
-        })
-        self.fields['password2'].widget = forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirm password'
-        })
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control form-control-lg'
+        self.fields['username'].widget.attrs['placeholder'] = 'Choose a username'
+        self.fields['email'].widget.attrs['placeholder'] = 'you@example.com'
+        if 'password1' in self.fields:
+            self.fields['password1'].widget.attrs['placeholder'] = 'Create a password'
+        if 'password2' in self.fields:
+            self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'
 
     class Meta:
         model = User
